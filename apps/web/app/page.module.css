@@ -1,9 +1,11 @@
-.main_container {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
   padding: 20px 0;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .form_search {
@@ -25,11 +27,60 @@
   border: none;
   outline: none;
   font-size: 1rem;
-  color: black;
+  color: var(--color-black);
   font-style: bold;
   width: 100%;
 }
 
 .icon_search {
   cursor: pointer;
+}
+
+.main_container {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.header_main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.title_main {
+  padding: 15px 0;
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+.btn_create_task {
+  width: 150px;
+  padding: 10px 5px;
+  font-size: 1rem;
+  background-color: var(--color-black);
+  border-radius: 5px;
+  border: none;
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.btn_create_task:hover {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.column_tasks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 80px;
+}
+
+.todo_column, .progress_column, .done_column {
+  border-radius: 5px;
+  text-align: start;
+  width: 280px;
+  background-color: var(--color-gray);
+  padding: 5px 10px;
 }
