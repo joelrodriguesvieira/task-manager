@@ -50,8 +50,7 @@
 
 .title_main {
   padding: 15px 0;
-  font-size: 1.5rem;
-  font-weight: 300;
+  font-size: 2rem;
 }
 
 .btn_create_task {
@@ -70,17 +69,52 @@
   color: var(--color-black);
 }
 
-.column_tasks {
+.tasks_columns {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: space-between;
   gap: 80px;
 }
 
-.todo_column, .progress_column, .done_column {
+.type_column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  color: var(--color-black);
   border-radius: 5px;
-  text-align: start;
-  width: 280px;
-  background-color: var(--color-gray);
-  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+.create_card_column {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: var(--color-black);
+  cursor: pointer;
+}
+
+.create_card_column:hover {
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+}
+
+.todo_column,
+.progress_column,
+.done_column {
+  color: var(--color-black);
+  border-radius: 12px;
+  text-align: center;
+  width: 320px;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.todo_cards,
+.progress_cards,
+.done_cards {
+  padding: 8px 5px;
 }

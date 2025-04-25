@@ -2,8 +2,9 @@
 
 import { ChangeEvent, useState } from "react";
 import styles from "./page.module.css";
-import { Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { Task } from "./types/task";
+import TaskCard from "./components/task-card";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -37,18 +38,40 @@ export default function Home() {
 
       <main className={styles.main_container}>
         <div className={styles.header_main}>
-          <h1 className={styles.title_main}>Vamos aos trabalhos.</h1>
+          <h1 className={styles.title_main}>Gerenciador de Tarefas</h1>
           <button className={styles.btn_create_task}>Criar tarefa</button>
         </div>
-        <div className={styles.column_tasks}>
+
+        <div className={styles.tasks_columns}>
           <div className={styles.todo_column}>
-            <h3>A fazer</h3>
+            <div className={styles.type_column}>
+              <h3>A Fazer</h3>
+              <button className={styles.create_card_column}>
+                <Plus size={18} />
+              </button>
+            </div>
+            <div className={styles.todo_cards}>
+              <TaskCard />
+            </div>
           </div>
+
           <div className={styles.progress_column}>
-            <h3>Em Progresso</h3>
+            <div className={styles.type_column}>
+              <h3>Em Progresso</h3>
+              <button className={styles.create_card_column}>
+                <Plus size={18} />
+              </button>
+            </div>
+            <div className={styles.progress_cards}></div>
           </div>
           <div className={styles.done_column}>
-            <h3>Finalizada</h3>
+            <div className={styles.type_column}>
+              <h3>Finalizada</h3>
+              <button className={styles.create_card_column}>
+                <Plus size={18} />
+              </button>
+            </div>
+            <div className={styles.done_cards}></div>
           </div>
         </div>
       </main>
