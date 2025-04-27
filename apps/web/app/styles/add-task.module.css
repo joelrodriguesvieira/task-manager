@@ -1,0 +1,16 @@
+.main_button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 15px;
+  border: 1px solid var(--color-gray);
+  border-radius: 10px;
+  background: var(--color-gray);
+  cursor: pointer;
+}
+
+.main_button:hover {
+  background: none;
+  border: 1px solid var(--color-gray);
+}

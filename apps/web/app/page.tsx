@@ -3,8 +3,9 @@
 import { ChangeEvent, useState } from "react";
 import styles from "./page.module.css";
 import { Plus, Search } from "lucide-react";
-import { Task } from "./types/task";
+import { Task, TaskStatus } from "./types/task";
 import TaskCard from "./components/task-card";
+import AddTask from "./components/add-task";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -45,33 +46,51 @@ export default function Home() {
         <div className={styles.tasks_columns}>
           <div className={styles.todo_column}>
             <div className={styles.type_column}>
-              <h3>A Fazer</h3>
-              <button className={styles.create_card_column}>
-                <Plus size={18} />
-              </button>
+              <h3 className={`${styles.title_box} ${styles.todo_title}`}>
+                A Fazer
+              </h3>
             </div>
-            <div className={styles.todo_cards}>
-              <TaskCard />
+            <div className={styles.cards}>
+              <div className={styles.todo_cards}>
+                <TaskCard />
+              </div>
+              <div className={styles.footer_cards}>
+                <AddTask status={TaskStatus.TODO} />
+              </div>
             </div>
           </div>
 
           <div className={styles.progress_column}>
             <div className={styles.type_column}>
-              <h3>Em Progresso</h3>
-              <button className={styles.create_card_column}>
-                <Plus size={18} />
-              </button>
+              <h3 className={`${styles.title_box} ${styles.in_progress_title}`}>
+                Em Progresso
+              </h3>
             </div>
-            <div className={styles.progress_cards}></div>
+            <div className={styles.cards}>
+              {/* PARTE QUE VAI O CARD*/}
+              <div className={styles.progress_cards}>
+                <TaskCard />
+              </div>
+              <div className={styles.footer_cards}>
+                <AddTask status={TaskStatus.IN_PROGRESS} />
+              </div>
+            </div>
           </div>
+
           <div className={styles.done_column}>
             <div className={styles.type_column}>
-              <h3>Finalizada</h3>
-              <button className={styles.create_card_column}>
-                <Plus size={18} />
-              </button>
+              <h3 className={`${styles.title_box} ${styles.done_title}`}>
+                Finalizada
+              </h3>
             </div>
-            <div className={styles.done_cards}></div>
+            <div className={styles.cards}>
+              {/* PARTE QUE VAI O CARD*/}
+              <div className={styles.done_cards}>
+              </div>
+              <div className={styles.footer_cards}>
+                <AddTask status={TaskStatus.DONE} />
+              </div>
+            </div>
           </div>
         </div>
       </main>

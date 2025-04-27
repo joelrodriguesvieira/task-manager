@@ -59,13 +59,13 @@
   font-size: 1rem;
   background-color: var(--color-black);
   border-radius: 5px;
-  border: none;
+  border: 1px solid var(--color-black);
   color: var(--color-white);
   cursor: pointer;
 }
 
 .btn_create_task:hover {
-  background-color: var(--color-white);
+  background: none;
   color: var(--color-black);
 }
 
@@ -74,16 +74,6 @@
   align-items: start;
   justify-content: space-between;
   gap: 80px;
-}
-
-.type_column {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 10px;
-  color: var(--color-black);
-  border-radius: 5px;
-  text-transform: uppercase;
 }
 
 .create_card_column {
@@ -113,8 +103,40 @@
   gap: 5px;
 }
 
+.cards {
+  padding: 8px 5px;
+  display: flex;
+  flex-direction: column;
+}
+
 .todo_cards,
 .progress_cards,
 .done_cards {
-  padding: 8px 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.type_column {
+  display: flex;
+  align-items: center;
+  padding: 4px 10px;
+  color: var(--color-white);
+}
+
+.title_box {
+  padding: 3px 12px;
+  border-radius: 10px;
+}
+
+.todo_title {
+  background-color: rgb(32, 32, 129);
+}
+
+.in_progress_title {
+  background-color: #b97c2c;
+}
+
+.done_title {
+  background-color: rgb(0, 94, 0);
 }
