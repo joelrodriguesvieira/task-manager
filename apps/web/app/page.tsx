@@ -92,7 +92,6 @@ export default function Home() {
             <div className={styles.cards}>
               {/* PARTE QUE VAI O CARD*/}
               <div className={styles.progress_cards}>
-                <TaskCard />
               </div>
               <div className={styles.footer_cards}>
                 <AddTask
