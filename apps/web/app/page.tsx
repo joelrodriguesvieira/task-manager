@@ -2,14 +2,19 @@
 
 import { ChangeEvent, useState } from "react";
 import styles from "./page.module.css";
-import { Plus, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Task, TaskStatus } from "./types/task";
 import TaskCard from "./components/task-card";
 import AddTask from "./components/add-task";
+import NewTaskCard from "./components/new-task-card";
 
 export default function Home() {
   const [search, setSearch] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [onShowNewTask, setOnShowNewTask] = useState<boolean>(false);
+  const [newTaskStatus, setNewTaskStatus] = useState<TaskStatus | undefined>(
+    undefined
+  );
 
   const filteredTasks =
     search !== ""
@@ -21,6 +26,16 @@ export default function Home() {
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     const query = event.target.value;
     setSearch(query);
+  }
+
+  function handleCreateTask(status?: TaskStatus) {
+    setNewTaskStatus(status)
+    setOnShowNewTask(true);
+  }
+
+  function handleCloseNewTask() {
+    setOnShowNewTask(false);
+    setNewTaskStatus(undefined);
   }
 
   return (
@@ -38,9 +53,17 @@ export default function Home() {
       </header>
 
       <main className={styles.main_container}>
+        {onShowNewTask && (
+          <NewTaskCard status={newTaskStatus} onClose={handleCloseNewTask} />
+        )}
         <div className={styles.header_main}>
           <h1 className={styles.title_main}>Gerenciador de Tarefas</h1>
-          <button className={styles.btn_create_task}>Criar tarefa</button>
+          <button
+            className={styles.btn_create_task}
+            onClick={() => handleCreateTask()}
+          >
+            Criar tarefa
+          </button>
         </div>
 
         <div className={styles.tasks_columns}>
@@ -55,7 +78,7 @@ export default function Home() {
                 <TaskCard />
               </div>
               <div className={styles.footer_cards}>
-                <AddTask status={TaskStatus.TODO} />
+                <AddTask onClick={() => handleCreateTask(TaskStatus.TODO)} />
               </div>
             </div>
           </div>
@@ -72,7 +95,9 @@ export default function Home() {
                 <TaskCard />
               </div>
               <div className={styles.footer_cards}>
-                <AddTask status={TaskStatus.IN_PROGRESS} />
+                <AddTask
+                  onClick={() => handleCreateTask(TaskStatus.IN_PROGRESS)}
+                />
               </div>
             </div>
           </div>
@@ -85,10 +110,9 @@ export default function Home() {
             </div>
             <div className={styles.cards}>
               {/* PARTE QUE VAI O CARD*/}
-              <div className={styles.done_cards}>
-              </div>
+              <div className={styles.done_cards}></div>
               <div className={styles.footer_cards}>
-                <AddTask status={TaskStatus.DONE} />
+                <AddTask onClick={() => handleCreateTask(TaskStatus.DONE)} />
               </div>
             </div>
           </div>
