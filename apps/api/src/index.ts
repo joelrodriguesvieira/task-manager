@@ -1,23 +1,27 @@
 import express from "express";
 import { config } from "dotenv";
-import { MongoClient } from "./config/database.js";
+import { connectDatabase } from "./config/database.js";
+import { taskRoutes } from "./routes/tasks/task.routes.js";
 
-const main = async () => {
-  config();
+config();
+const PORT = process.env.PORT || 3001;
+const app = express();
 
-  const app = express();
+app.use(express.json());
 
-  const PORT = process.env.PORT || 3001;
+app.use("/tasks", taskRoutes);
 
-  await MongoClient.connect();
+try {
+  await connectDatabase();
+} catch (error) {
+  console.error(error);
+}
 
-  app.get("/", (req, res) => {
-    res.send("Hello World");
-  });
+app.get("/", (req, res) => {
+  console.log("Test route hit");
+  res.send("Hello World");
+});
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on PORT ${PORT}`);
-  });
-};
-
-main();
+app.listen(PORT, () => {
+  console.log(`Server is running on PORT ${PORT}`);
+});
