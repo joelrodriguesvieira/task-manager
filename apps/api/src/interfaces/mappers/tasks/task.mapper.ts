@@ -6,13 +6,13 @@ export class TaskMapper {
     let status: "pending" | "in-progress" | "completed";
 
     switch (data.status) {
-      case "a fazer":
+      case "A fazer":
         status = "pending";
         break;
-      case "em andamento":
+      case "Em andamento":
         status = "in-progress";
         break;
-      case "feita":
+      case "Feita":
         status = "completed";
         break;
       default:
