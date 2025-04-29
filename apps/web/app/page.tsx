@@ -1,12 +1,13 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { Search } from "lucide-react";
 import { Task, TaskStatus } from "./types/task";
 import TaskCard from "./components/task-card";
 import AddTask from "./components/add-task";
-import NewTaskCard from "./components/new-task-card";
+import NewTaskCard from "./components/modal-task-card";
+import { mapTask } from "./utils/mapper";
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -15,6 +16,33 @@ export default function Home() {
   const [newTaskStatus, setNewTaskStatus] = useState<TaskStatus | undefined>(
     undefined
   );
+  const [todoTasks, setTodoTasks] = useState<Task[]>([]);
+  const [inProgressTasks, setInProgressTasks] = useState<Task[]>([]);
+  const [doneTasks, setDoneTasks] = useState<Task[]>([]);
+
+  async function fetchTasksByStatus(
+    status: string,
+    setter: (tasks: Task[]) => void
+  ) {
+    try {
+      const response = await fetch(
+        `http://localhost:3001/tasks/filter?status=${status}`
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch tasks with status ${status}`);
+      }
+      const dataJson = await response.json();
+      setter(dataJson.map(mapTask));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchTasksByStatus("pending", setTodoTasks);
+    fetchTasksByStatus("in-progress", setInProgressTasks);
+    fetchTasksByStatus("done", setDoneTasks);
+  }, []);
 
   const filteredTasks =
     search !== ""
@@ -29,7 +57,7 @@ export default function Home() {
   }
 
   function handleCreateTask(status?: TaskStatus) {
-    setNewTaskStatus(status)
+    setNewTaskStatus(status);
     setOnShowNewTask(true);
   }
 
@@ -75,7 +103,15 @@ export default function Home() {
             </div>
             <div className={styles.cards}>
               <div className={styles.todo_cards}>
-                <TaskCard />
+                {todoTasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    status={task.status}
+                  />
+                ))}
               </div>
               <div className={styles.footer_cards}>
                 <AddTask onClick={() => handleCreateTask(TaskStatus.TODO)} />
@@ -90,8 +126,16 @@ export default function Home() {
               </h3>
             </div>
             <div className={styles.cards}>
-              {/* PARTE QUE VAI O CARD*/}
               <div className={styles.progress_cards}>
+                {inProgressTasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    status={task.status}
+                  />
+                ))}
               </div>
               <div className={styles.footer_cards}>
                 <AddTask
@@ -108,8 +152,17 @@ export default function Home() {
               </h3>
             </div>
             <div className={styles.cards}>
-              {/* PARTE QUE VAI O CARD*/}
-              <div className={styles.done_cards}></div>
+              <div className={styles.done_cards}>
+                {doneTasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    id={task.id}
+                    title={task.title}
+                    description={task.description}
+                    status={task.status}
+                  />
+                ))}
+              </div>
               <div className={styles.footer_cards}>
                 <AddTask onClick={() => handleCreateTask(TaskStatus.DONE)} />
               </div>
