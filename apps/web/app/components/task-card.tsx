@@ -1,13 +1,15 @@
-import { X } from "lucide-react";
+import { Pen, X } from "lucide-react";
 import styles from "../styles/task-card.module.css";
-import { Task } from "../types/task";
+import { Task, TaskStatus } from "../types/task";
 import { useState } from "react";
 import ConfirmDeleteModal from "./confirm-delete-modal";
+import { getCardClassByStatus } from "../utils/utils";
 
 interface TaskCardProps extends Task {
   onEdit: (task: Task) => void;
-  onDelete: (taskId: string) => void | boolean;
+  onDelete: (taskId: string) => Promise<void | boolean>;
   onTaskUpdated: () => void;
+  type: TaskStatus;
 }
 
 export default function TaskCard({
@@ -18,6 +20,7 @@ export default function TaskCard({
   onEdit,
   onDelete,
   onTaskUpdated,
+  type,
 }: TaskCardProps) {
   const [onShowModalDelete, setOnShowModalDelete] = useState<boolean>(false);
 
@@ -38,7 +41,7 @@ export default function TaskCard({
   }
 
   return (
-    <div className={styles.card_container} id={id}>
+    <div className={`${styles.card_container} ${styles[getCardClassByStatus(type)]}`} id={id}>
       {onShowModalDelete && (
         <ConfirmDeleteModal
           taskTitle={title}
@@ -52,7 +55,7 @@ export default function TaskCard({
           className={`${styles.btn_delete} ${styles.delete}`}
           onClick={() => handleDeleteTask()}
         >
-          <X size={15} />
+          <X size={20} />
         </button>
       </div>
 
@@ -65,7 +68,7 @@ export default function TaskCard({
             className={styles.btn_edit}
             onClick={() => onEdit({ id, title, description, status })}
           >
-            Editar Tarefa
+            <Pen size={20} />
           </button>
         </div>
       </div>

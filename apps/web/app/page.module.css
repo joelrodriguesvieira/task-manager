@@ -121,6 +121,7 @@
   align-items: center;
   padding: 4px 10px;
   color: var(--color-white);
+  font-size: 0.9rem;
   text-transform: uppercase;
 }
 
@@ -131,13 +132,13 @@
 }
 
 .todo_title {
-  background-color: #352081;
+  background-color: #456aaf;
 }
 
 .in_progress_title {
-  background-color: #865f15;
+  background-color: #978032;
 }
 
 .done_title {
-  background-color: #004e00;
+  background-color: #499149;
 }

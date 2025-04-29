@@ -76,17 +76,16 @@ export default function Home() {
     setOnShowNewTask(true);
   }
 
-  async function handleDeleteTask(taskId: string) {
+  async function handleDeleteTask(taskId: string): Promise<void | boolean> {
     try {
       const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
-  
+
       if (!response.ok) {
         throw new Error(`Error DELETE fetch: status ${response.status}`);
       }
       return true;
-  
     } catch (error) {
       console.error("Error to try delete the task:", error);
       return false;
@@ -150,6 +149,7 @@ export default function Home() {
                     onEdit={handleEditTask}
                     onDelete={handleDeleteTask}
                     onTaskUpdated={reloadTasks}
+                    type={TaskStatus.TODO}
                   />
                 ))}
               </div>
@@ -177,6 +177,7 @@ export default function Home() {
                     onEdit={handleEditTask}
                     onDelete={handleDeleteTask}
                     onTaskUpdated={reloadTasks}
+                    type={TaskStatus.IN_PROGRESS}
                   />
                 ))}
               </div>
@@ -206,6 +207,7 @@ export default function Home() {
                     onEdit={handleEditTask}
                     onDelete={handleDeleteTask}
                     onTaskUpdated={reloadTasks}
+                    type={TaskStatus.DONE}
                   />
                 ))}
               </div>
