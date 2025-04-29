@@ -53,13 +53,6 @@ export default function Home() {
     ]);
   }
 
-  const filteredTasks =
-    search !== ""
-      ? tasks.filter((task) =>
-          task.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-        )
-      : tasks;
-
   function handleSearch(event: ChangeEvent<HTMLInputElement>) {
     const query = event.target.value;
     setSearch(query);
@@ -101,10 +94,10 @@ export default function Home() {
     <div className={styles.container}>
       <header>
         <form className={styles.form_search}>
-          <Search size={20} className={styles.icon_search} />
+          <Search size={20}/>
           <input
             type="text"
-            placeholder="Busque suas tarefas..."
+            placeholder="Busque tarefas por título..."
             onChange={handleSearch}
             className={styles.input_search}
           />
@@ -139,19 +132,23 @@ export default function Home() {
             </div>
             <div className={styles.cards}>
               <div className={styles.todo_cards}>
-                {todoTasks.map((task) => (
-                  <TaskCard
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                    description={task.description}
-                    status={task.status}
-                    onEdit={handleEditTask}
-                    onDelete={handleDeleteTask}
-                    onTaskUpdated={reloadTasks}
-                    type={TaskStatus.TODO}
-                  />
-                ))}
+                {todoTasks
+                  .filter((task) =>
+                    task.title.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((task) => (
+                    <TaskCard
+                      key={task.id}
+                      id={task.id}
+                      title={task.title}
+                      description={task.description}
+                      status={task.status}
+                      onEdit={handleEditTask}
+                      onDelete={handleDeleteTask}
+                      onTaskUpdated={reloadTasks}
+                      type={TaskStatus.TODO}
+                    />
+                  ))}
               </div>
               <div className={styles.footer_cards}>
                 <AddTask onClick={() => handleCreateTask(TaskStatus.TODO)} />
@@ -167,19 +164,23 @@ export default function Home() {
             </div>
             <div className={styles.cards}>
               <div className={styles.progress_cards}>
-                {inProgressTasks.map((task) => (
-                  <TaskCard
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                    description={task.description}
-                    status={task.status}
-                    onEdit={handleEditTask}
-                    onDelete={handleDeleteTask}
-                    onTaskUpdated={reloadTasks}
-                    type={TaskStatus.IN_PROGRESS}
-                  />
-                ))}
+                {inProgressTasks
+                  .filter((task) =>
+                    task.title.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((task) => (
+                    <TaskCard
+                      key={task.id}
+                      id={task.id}
+                      title={task.title}
+                      description={task.description}
+                      status={task.status}
+                      onEdit={handleEditTask}
+                      onDelete={handleDeleteTask}
+                      onTaskUpdated={reloadTasks}
+                      type={TaskStatus.IN_PROGRESS}
+                    />
+                  ))}
               </div>
               <div className={styles.footer_cards}>
                 <AddTask
@@ -197,19 +198,23 @@ export default function Home() {
             </div>
             <div className={styles.cards}>
               <div className={styles.done_cards}>
-                {doneTasks.map((task) => (
-                  <TaskCard
-                    key={task.id}
-                    id={task.id}
-                    title={task.title}
-                    description={task.description}
-                    status={task.status}
-                    onEdit={handleEditTask}
-                    onDelete={handleDeleteTask}
-                    onTaskUpdated={reloadTasks}
-                    type={TaskStatus.DONE}
-                  />
-                ))}
+                {doneTasks
+                  .filter((task) =>
+                    task.title.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((task) => (
+                    <TaskCard
+                      key={task.id}
+                      id={task.id}
+                      title={task.title}
+                      description={task.description}
+                      status={task.status}
+                      onEdit={handleEditTask}
+                      onDelete={handleDeleteTask}
+                      onTaskUpdated={reloadTasks}
+                      type={TaskStatus.DONE}
+                    />
+                  ))}
               </div>
               <div className={styles.footer_cards}>
                 <AddTask onClick={() => handleCreateTask(TaskStatus.DONE)} />
