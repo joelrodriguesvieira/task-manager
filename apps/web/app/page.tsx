@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { Task, TaskStatus } from "./types/task";
 import TaskCard from "./components/task-card";
 import AddTask from "./components/add-task";
-import NewTaskCard from "./components/modal-task-card";
+import ModalTaskCard from "./components/modal-task-card";
 import { mapTask } from "./utils/mapper";
 
 export default function Home() {
@@ -19,6 +19,7 @@ export default function Home() {
   const [todoTasks, setTodoTasks] = useState<Task[]>([]);
   const [inProgressTasks, setInProgressTasks] = useState<Task[]>([]);
   const [doneTasks, setDoneTasks] = useState<Task[]>([]);
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
 
   async function fetchTasksByStatus(
     status: string,
@@ -41,8 +42,16 @@ export default function Home() {
   useEffect(() => {
     fetchTasksByStatus("pending", setTodoTasks);
     fetchTasksByStatus("in-progress", setInProgressTasks);
-    fetchTasksByStatus("done", setDoneTasks);
+    fetchTasksByStatus("completed", setDoneTasks);
   }, []);
+
+  async function reloadTasks() {
+    await Promise.all([
+      fetchTasksByStatus("pending", setTodoTasks),
+      fetchTasksByStatus("in-progress", setInProgressTasks),
+      fetchTasksByStatus("completed", setDoneTasks),
+    ]);
+  }
 
   const filteredTasks =
     search !== ""
@@ -58,6 +67,12 @@ export default function Home() {
 
   function handleCreateTask(status?: TaskStatus) {
     setNewTaskStatus(status);
+    setSelectedTask(undefined);
+    setOnShowNewTask(true);
+  }
+
+  function handleEditTask(task: Task) {
+    setSelectedTask(task);
     setOnShowNewTask(true);
   }
 
@@ -82,8 +97,9 @@ export default function Home() {
 
       <main className={styles.main_container}>
         {onShowNewTask && (
-          <NewTaskCard status={newTaskStatus} onClose={handleCloseNewTask} />
+          <ModalTaskCard task={selectedTask} onClose={handleCloseNewTask} onTaskUpdated={reloadTasks}/>
         )}
+
         <div className={styles.header_main}>
           <h1 className={styles.title_main}>Gerenciador de Tarefas</h1>
           <button
@@ -110,6 +126,7 @@ export default function Home() {
                     title={task.title}
                     description={task.description}
                     status={task.status}
+                    onEdit={handleEditTask}
                   />
                 ))}
               </div>
@@ -134,6 +151,7 @@ export default function Home() {
                     title={task.title}
                     description={task.description}
                     status={task.status}
+                    onEdit={handleEditTask}
                   />
                 ))}
               </div>
@@ -160,6 +178,7 @@ export default function Home() {
                     title={task.title}
                     description={task.description}
                     status={task.status}
+                    onEdit={handleEditTask}
                   />
                 ))}
               </div>

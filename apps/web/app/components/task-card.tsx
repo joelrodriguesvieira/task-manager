@@ -2,7 +2,17 @@ import { X } from "lucide-react";
 import styles from "../styles/task-card.module.css";
 import { Task } from "../types/task";
 
-export default function TaskCard({ id, title, description, status }: Task) {
+interface TaskCardProps extends Task {
+  onEdit: (task: Task) => void;
+}
+
+export default function TaskCard({
+  id,
+  title,
+  description,
+  status,
+  onEdit,
+}: TaskCardProps) {
   return (
     <div className={styles.card_container} id={id}>
       <div className={styles.header_card}>
@@ -17,7 +27,12 @@ export default function TaskCard({ id, title, description, status }: Task) {
       <div className={styles.footer_card}>
         <span className={styles.status_card}>{status}</span>
         <div className={styles.option_btns}>
-          <button className={styles.btn_edit}>Editar Tarefa</button>
+          <button
+            className={styles.btn_edit}
+            onClick={() => onEdit({ id, title, description, status })}
+          >
+            Editar Tarefa
+          </button>
         </div>
       </div>
     </div>

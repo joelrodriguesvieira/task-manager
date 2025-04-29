@@ -15,7 +15,7 @@ function mapStatus(apiStatus: string): TaskStatus {
       return TaskStatus.TODO;
     case "in-progress":
       return TaskStatus.IN_PROGRESS;
-    case "done":
+    case "completed":
       return TaskStatus.DONE;
     default:
       throw new Error(`Unknown status from API: ${apiStatus}`);
