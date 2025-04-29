@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { Task, TaskStatus } from "./types/task";
 import TaskCard from "./components/task-card";
 import AddTask from "./components/add-task";
-import ModalTaskCard from "./components/modal-task-card";
+import TaskCardModal from "./components/task-card-modal";
 import { mapTask } from "./utils/mapper";
 
 export default function Home() {
@@ -20,6 +20,12 @@ export default function Home() {
   const [inProgressTasks, setInProgressTasks] = useState<Task[]>([]);
   const [doneTasks, setDoneTasks] = useState<Task[]>([]);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
+
+  useEffect(() => {
+    fetchTasksByStatus("pending", setTodoTasks);
+    fetchTasksByStatus("in-progress", setInProgressTasks);
+    fetchTasksByStatus("completed", setDoneTasks);
+  }, []);
 
   async function fetchTasksByStatus(
     status: string,
@@ -38,12 +44,6 @@ export default function Home() {
       console.error(error);
     }
   }
-
-  useEffect(() => {
-    fetchTasksByStatus("pending", setTodoTasks);
-    fetchTasksByStatus("in-progress", setInProgressTasks);
-    fetchTasksByStatus("completed", setDoneTasks);
-  }, []);
 
   async function reloadTasks() {
     await Promise.all([
@@ -76,6 +76,23 @@ export default function Home() {
     setOnShowNewTask(true);
   }
 
+  async function handleDeleteTask(taskId: string) {
+    try {
+      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error DELETE fetch: status ${response.status}`);
+      }
+      return true;
+  
+    } catch (error) {
+      console.error("Error to try delete the task:", error);
+      return false;
+    }
+  }
+
   function handleCloseNewTask() {
     setOnShowNewTask(false);
     setNewTaskStatus(undefined);
@@ -97,7 +114,11 @@ export default function Home() {
 
       <main className={styles.main_container}>
         {onShowNewTask && (
-          <ModalTaskCard task={selectedTask} onClose={handleCloseNewTask} onTaskUpdated={reloadTasks}/>
+          <TaskCardModal
+            task={selectedTask}
+            onClose={handleCloseNewTask}
+            onTaskUpdated={reloadTasks}
+          />
         )}
 
         <div className={styles.header_main}>
@@ -127,6 +148,8 @@ export default function Home() {
                     description={task.description}
                     status={task.status}
                     onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                    onTaskUpdated={reloadTasks}
                   />
                 ))}
               </div>
@@ -152,6 +175,8 @@ export default function Home() {
                     description={task.description}
                     status={task.status}
                     onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                    onTaskUpdated={reloadTasks}
                   />
                 ))}
               </div>
@@ -179,6 +204,8 @@ export default function Home() {
                     description={task.description}
                     status={task.status}
                     onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                    onTaskUpdated={reloadTasks}
                   />
                 ))}
               </div>

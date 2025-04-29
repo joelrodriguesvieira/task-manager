@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import styles from "../styles/modal-task-card.module.css";
+import styles from "../styles/task-card-modal.module.css";
 import { FormEvent, useState } from "react";
 import { Task, TaskStatus } from "../types/task";
 
@@ -9,7 +9,7 @@ interface NewTaskCardProps {
   onTaskUpdated?: () => void;
 }
 
-export default function ModalTaskCard({ task, onClose, onTaskUpdated }: NewTaskCardProps) {
+export default function TaskCardModal({ task, onClose, onTaskUpdated }: NewTaskCardProps) {
   const [title, setTitle] = useState<string>(task?.title ?? "");
   const [description, setDescription] = useState<string>(
     task?.description ?? ""
