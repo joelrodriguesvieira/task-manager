@@ -4,6 +4,22 @@ Aplicação web fullstack para organização de tarefas pessoais ou profissionai
 
 ---
 
+## Requisitos Atendidos
+
+### Requisitos Funcionais
+
+* [x] Criar tarefas com título, descrição e status.
+* [x] Excluir tarefas de forma simples e intuitiva.
+* [x] Listar todas as tarefas: utilize sua criatividade para apresentar as informações de maneira clara e organizada.
+
+### Requisitos Não Funcionais
+
+* [x] Desenvolver o front-end com Next.js.
+* [x] Implementar o back-end com Node.js.
+* [x] Estruturar o projeto como um monorepo usando Turborepo.
+* [x] Persistir os dados em um banco de dados.
+* [x] Manter um histórico organizado e descritivo dos commits.
+
 ## 🚀 Tecnologias Utilizadas
 
 ### Frontend:
@@ -27,26 +43,27 @@ Aplicação web fullstack para organização de tarefas pessoais ou profissionai
 
 Este projeto utiliza uma arquitetura de monorepo gerenciada pelo Turborepo. A estrutura principal é a seguinte:
 
-├── apps/
-│ ├── api/ # Aplicação Back-end (Node.js, Express)
-│ └── web/ # Aplicação Front-end (Next.js)
-├── packages/ # (Opcional: para código reutilizável entre as apps)
-├── turbo.json # Configuração do Turborepo
-└── README.md
+- **apps/**: Contém as aplicações individuais.
+  - **api/**: Aplicação Back-end (Node.js, Express)
+  - **web/**: Aplicação Front-end (Next.js)
+- **packages/**: (Opcional: para código reutilizável entre as apps)
+- **turbo.json**: Configuração do Turborepo
+- **README.md**
 
 ### Back-end (`apps/api`)
 
 O back-end é construído utilizando Node.js, Express e TypeScript. A persistência dos dados é feita com MongoDB através do Mongoose. A estrutura de pastas do back-end é a seguinte:
 
-src/
-├── config/ # Arquivos de configuração (banco de dados, etc.)
-├── controllers/ # Lógica para lidar com as requisições HTTP
-├── interfaces/ # Definições de tipo para TypeScript
-├── models/ # Schemas do Mongoose para os dados
-├── repositories/ # Lógica para interagir com o banco de dados
-├── routes/ # Definição das rotas da API
-├── services/ # Lógica de negócios da aplicação
-└── index.ts # Ponto de entrada da aplicação back-end
+- **src/**: Contém o código fonte do back-end.
+  - **config/**: Arquivos de configuração (banco de dados, etc.)
+  - **controllers/**: Lógica para lidar com as requisições HTTP
+  - **interfaces/**: Definições de tipo para TypeScript
+  - **models/**: Schemas do Mongoose para os dados
+  - **repositories/**: Lógica para interagir com o banco de dados
+  - **routes/**: Definição das rotas da API
+  - **services/**: Lógica de negócios da aplicação
+  - **index.ts**: Ponto de entrada da aplicação back-end
+
 
 **Bibliotecas Utilizadas (Back-end):**
 
@@ -65,15 +82,15 @@ src/
 
 O front-end é desenvolvido utilizando o framework Next.js, que permite a criação de aplicações React com renderização no servidor e outras funcionalidades. A estrutura de pastas do front-end é a seguinte:
 
-src/
-├── components/ # Componentes reutilizáveis da interface do usuário
-├── styles/ # Estilos globais e de módulos CSS
-├── types/ # Definições de tipo para TypeScript
-├── utils/ # Funções utilitárias
-├── globals.css # Estilos globais da aplicação
-├── layout.tsx # Layout principal da aplicação
-├── page.module.css # Estilos para a página principal
-└── page.tsx # Página principal da aplicação (listagem de tarefas)
+- **src/**: Contém o código fonte do front-end.
+  - **components/**: Componentes reutilizáveis da interface do usuário
+  - **styles/**: Estilos globais e de módulos CSS
+  - **types/**: Definições de tipo para TypeScript
+  - **utils/**: Funções utilitárias
+  - **globals.css**: Estilos globais da aplicação
+  - **layout.tsx**: Layout principal da aplicação
+  - **page.module.css**: Estilos para a página principal
+  - **page.tsx**: Página principal da aplicação (listagem de tarefas)
 
 **Bibliotecas Utilizadas (Front-end):**
 
