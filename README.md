@@ -1,84 +1,167 @@
-# Turborepo starter
+# 📝 Gerenciador de Tarefas
 
-This Turborepo starter is maintained by the Turborepo core team.
+Aplicação web fullstack para organização de tarefas pessoais ou profissionais, com funcionalidades de criação, edição, exclusão e visualização de tarefas organizadas por status ("A Fazer", "Em Progresso" e "Finalizada").
 
-## Using this example
+---
 
-Run the following command:
+## 🚀 Tecnologias Utilizadas
 
-```sh
-npx create-turbo@latest
+### Frontend:
+
+- **Next.js** (com `use client`)
+- **TypeScript**
+- **CSS Modules**
+- **Lucide React** (ícones)
+
+### Backend:
+
+- **Node.js**
+- **Express.js**
+- **TypeScript**
+- **MongoDB** (via MongoDB Atlas)
+- **Mongoose** (ODM)
+
+---
+
+## Arquitetura do Projeto
+
+Este projeto utiliza uma arquitetura de monorepo gerenciada pelo Turborepo. A estrutura principal é a seguinte:
+
+├── apps/
+│ ├── api/ # Aplicação Back-end (Node.js, Express)
+│ └── web/ # Aplicação Front-end (Next.js)
+├── packages/ # (Opcional: para código reutilizável entre as apps)
+├── turbo.json # Configuração do Turborepo
+└── README.md
+
+### Back-end (`apps/api`)
+
+O back-end é construído utilizando Node.js, Express e TypeScript. A persistência dos dados é feita com MongoDB através do Mongoose. A estrutura de pastas do back-end é a seguinte:
+
+src/
+├── config/ # Arquivos de configuração (banco de dados, etc.)
+├── controllers/ # Lógica para lidar com as requisições HTTP
+├── interfaces/ # Definições de tipo para TypeScript
+├── models/ # Schemas do Mongoose para os dados
+├── repositories/ # Lógica para interagir com o banco de dados
+├── routes/ # Definição das rotas da API
+├── services/ # Lógica de negócios da aplicação
+└── index.ts # Ponto de entrada da aplicação back-end
+
+**Bibliotecas Utilizadas (Back-end):**
+
+- **Node.js:** Ambiente de execução JavaScript para o servidor.
+- **Express:** Framework web minimalista e flexível para Node.js.
+- **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
+- **Mongoose:** Biblioteca para modelagem de objetos MongoDB em Node.js.
+- **MongoDB:** Banco de dados NoSQL utilizado para persistência dos dados.
+- **cors:** Middleware para habilitar o Cross-Origin Resource Sharing (CORS).
+- **dotenv:** Para carregar variáveis de ambiente de um arquivo `.env`.
+- **nodemon:** (Apenas em desenvolvimento) Ferramenta para reiniciar automaticamente o servidor durante o desenvolvimento.
+- **ts-node:** (Apenas em desenvolvimento) Permite executar arquivos TypeScript diretamente.
+- **@types/\***: Definições de tipo para as bibliotecas JavaScript utilizadas.
+
+### Front-end (`apps/web`)
+
+O front-end é desenvolvido utilizando o framework Next.js, que permite a criação de aplicações React com renderização no servidor e outras funcionalidades. A estrutura de pastas do front-end é a seguinte:
+
+src/
+├── components/ # Componentes reutilizáveis da interface do usuário
+├── styles/ # Estilos globais e de módulos CSS
+├── types/ # Definições de tipo para TypeScript
+├── utils/ # Funções utilitárias
+├── globals.css # Estilos globais da aplicação
+├── layout.tsx # Layout principal da aplicação
+├── page.module.css # Estilos para a página principal
+└── page.tsx # Página principal da aplicação (listagem de tarefas)
+
+**Bibliotecas Utilizadas (Front-end):**
+
+- **Next.js:** Framework React para a construção de aplicações web com renderização no servidor e roteamento.
+- **React:** Biblioteca JavaScript para construir interfaces de usuário.
+- **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
+- **Lucide React:** Biblioteca de React para exibir ícones e símbolos.
+
+---
+
+## 🛠️ Como Configurar o MongoDB Atlas
+
+Para testar a aplicação, você precisa de uma conta gratuita no [MongoDB Atlas](https://www.mongodb.com/cloud/atlas). Siga os passos abaixo:
+
+### 1. Criar Conta
+
+- Acesse: https://www.mongodb.com/cloud/atlas
+- Clique em **Start Free** e crie uma conta (ou entre com GitHub/Google).
+- Crie uma **Organização** e um **Projeto**.
+
+### 2. Criar um Cluster Gratuito
+
+- Clique em **Build a Database**
+- Selecione a opção **Free Shared** (M0)
+- Escolha uma região e clique em **Create Cluster**
+
+### 3. Criar um Usuário de Banco
+
+- Vá em **Database Access** > **Add New Database User**
+- Defina um **username** e **password**
+- Deixe as permissões como **Read and Write to any database**
+- Clique em **Add User**
+
+### 4. Permitir Conexões
+
+- Vá em **Network Access**
+- Clique em **Add IP Address**
+- Escolha **Allow Access from Anywhere (0.0.0.0/0)**
+- Confirme
+
+### 5. Copiar a URI de Conexão
+
+- Vá em **Clusters > Connect > Connect your application**
+- Copie a URI semelhante a esta:
+
+```
+mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.xxxxx.mongodb.net/<DATABASE>?retryWrites=true&w=majority
 ```
 
-## What's inside?
+    Substitua `<USERNAME>`, `<PASSWORD>` e `<DATABASE>` pelos dados criados.
 
-This Turborepo includes the following packages/apps:
+### 6. Criar o Arquivo `.env`
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+Crie um arquivo `.env` na pasta `apps/api` com:
 
 ```
-cd my-turborepo
-pnpm build
+MONGODB_URL=mongodb+srv://<USERNAME>:<PASSWORD>@cluster0.xxxxx.mongodb.net/<DATABASE>?retryWrites=true&w=majority
 ```
 
-### Develop
+## Instruções para Executar a Aplicação
 
-To develop all apps and packages, run the following command:
+Siga estas etapas para executar a aplicação localmente:
 
-```
-cd my-turborepo
-pnpm dev
-```
+1.  **Clonar o repositório:**
 
-### Remote Caching
+    ```bash
+    git clone [https://github.com/joelrodriguesvieira/task-manager.git](https://github.com/joelrodriguesvieira/task-manager.git)
+    cd task-manager
+    ```
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+2.  **Instalar as dependências:**
+    Utilizando o Turborepo, você pode instalar todas as dependências de uma vez na raiz do projeto:
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+    ```bash
+    pnpm install
+    ```
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+3.  **Executar a aplicação em modo de desenvolvimento:**
+    Na raiz do projeto, execute o seguinte comando para iniciar ambos os aplicativos (front-end e back-end) em modo de desenvolvimento:
 
-```
-cd my-turborepo
-npx turbo login
-```
+    ```bash
+    pnpm run dev
+    ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+5.  **Acessar a aplicação:**
+    Abra seu navegador e acesse a URL do front-end (`http://localhost:3000`).
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## Autor
 
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turborepo.com/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+- [JOEL RODRIGUES VIEIRA]
+- [https://github.com/joelrodriguesvieira]
