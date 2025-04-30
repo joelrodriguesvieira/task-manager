@@ -2,9 +2,7 @@
 
 Aplicação web fullstack para organização de tarefas pessoais ou profissionais, com funcionalidades de criação, edição, exclusão e visualização de tarefas organizadas por status ("A Fazer", "Em Progresso" e "Finalizada").
 
----
-
-## Requisitos Atendidos
+## 📑 Requisitos Atendidos
 
 ### Requisitos Funcionais
 
@@ -37,9 +35,7 @@ Aplicação web fullstack para organização de tarefas pessoais ou profissionai
 - **MongoDB** (via MongoDB Atlas)
 - **Mongoose** (ODM)
 
----
-
-## Arquitetura do Projeto
+## 🗂️ Arquitetura do Projeto
 
 Este projeto utiliza uma arquitetura de monorepo gerenciada pelo Turborepo. A estrutura principal é a seguinte:
 
@@ -99,7 +95,17 @@ O front-end é desenvolvido utilizando o framework Next.js, que permite a criaç
 - **TypeScript:** Superset do JavaScript que adiciona tipagem estática.
 - **Lucide React:** Biblioteca de React para exibir ícones e símbolos.
 
----
+
+## 🗃️ Escolha do Banco de Dados: MongoDB
+
+A escolha pelo MongoDB neste projeto se deu por dois motivos principais:
+
+1. **Ausência de relacionamentos complexos**  
+   O projeto não exige relações entre múltiplas entidades ou tabelas — cada tarefa é uma unidade independente. Por isso, utilizar um banco de dados relacional traria uma complexidade desnecessária. Com o MongoDB, foi possível armazenar cada tarefa como um documento autônomo, simplificando o desenvolvimento e reduzindo o overhead da modelagem relacional.
+
+2. **Modelo de dados flexível**  
+   Mesmo com a existência de três tipos de status para as tarefas ("A Fazer", "Em Progresso" e "Finalizada"), não foi necessário estruturar esses valores rigidamente no banco. O MongoDB permite que esse controle seja feito diretamente no código da aplicação, mantendo a flexibilidade e facilitando futuras alterações ou adições de status sem migrações complexas de esquema.
+
 
 ## 🛠️ Como Configurar o MongoDB Atlas
 
