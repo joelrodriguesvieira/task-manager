@@ -138,3 +138,75 @@
 .done_title {
   background-color: #499149;
 }
+
+@media (max-width: 1024px) {
+  .tasks_columns {
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .todo_column,
+  .progress_column,
+  .done_column {
+    width: 45%;
+  }
+
+  .form_search {
+    width: 300px;
+  }
+
+  .btn_create_task {
+    width: 130px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tasks_columns {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+
+  .todo_column,
+  .progress_column,
+  .done_column {
+    width: 90%;
+  }
+
+  .form_search {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: row;
+  }
+
+  .header_main {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn_create_task {
+    width: 70%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title_main {
+    font-size: 1.5rem;
+  }
+
+  .form_search {
+    padding: 0 8px;
+  }
+
+  .input_search {
+    font-size: 0.9rem;
+  }
+
+  .btn_create_task {
+    font-size: 0.9rem;
+    padding: 8px 5px;
+  }
+}
